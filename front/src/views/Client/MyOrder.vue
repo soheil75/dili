@@ -42,7 +42,7 @@ export default {
     }),
     methods: {
         getwares() {
-            const path = 'http://localhost:5000/api/myorder';
+            const path = '/api/myorder';
             axios.get(path)
                 .then((res) => {
                     this.wares = res.data.wares;

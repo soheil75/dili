@@ -44,7 +44,7 @@ export default {
     }),
     methods: {
         Login(payload) {
-            const path = 'http://localhost:5000/api/login';
+            const path = '/api/login';
             axios.post(path, payload)
                 .then(() => {
                     //console.log(res.data.message)

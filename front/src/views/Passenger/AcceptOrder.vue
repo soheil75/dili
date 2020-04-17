@@ -76,7 +76,7 @@ export default {
             this.min = todayDate
         },
         getware() {
-            const path = `http://localhost:5000/api/acceptOrder/${this.$route.params.id}`;
+            const path = `/api/acceptOrder/${this.$route.params.id}`;
             axios.get(path)
                 .then((res) => {
                     this.ware = res.data.ware;
@@ -86,7 +86,7 @@ export default {
                 });
         },
         accept(payload) {
-            const path = `http://localhost:5000/api/acceptOrder/${this.ware.id}`;
+            const path = `/api/acceptOrder/${this.ware.id}`;
             axios.post(path, payload)
                 .then(() => {
                     this.$router.push('/MySuggestionsPass');

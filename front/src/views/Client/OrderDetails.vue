@@ -35,7 +35,7 @@ export default {
     },
     methods: {
         getware() {
-            const path = `http://localhost:5000/api/orderdetails/${this.$route.params.id}`;
+            const path = `/api/orderdetails/${this.$route.params.id}`;
             axios.get(path)
                 .then((res) => {
                     this.ware = res.data.ware;
@@ -45,7 +45,7 @@ export default {
                 });
         },
         addToMyOrder(payload) {
-            const path = `http://localhost:5000/api/orderdetails/${this.ware.id}`;
+            const path = `/api/orderdetails/${this.ware.id}`;
             axios.post(path, payload)
                 .then(() => {
                     this.$router.push('/MyOrder');

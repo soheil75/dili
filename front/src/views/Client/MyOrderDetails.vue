@@ -93,7 +93,7 @@ export default {
     }),
     methods: {
         getware() {
-            const path = `http://localhost:5000/api/myorderdetails/${this.$route.params.id}`;
+            const path = `/api/myorderdetails/${this.$route.params.id}`;
             axios.get(path)
                 .then((res) => {
                     this.ware = res.data.ware;
@@ -103,7 +103,7 @@ export default {
                 });
         },
         delete(payload) {
-            const path = `http://localhost:5000/api/myorderdetails/${this.ware.id}`;
+            const path = `/api/myorderdetails/${this.ware.id}`;
             axios.delete(path, payload)
                 .then(() => {
                     this.$router.push('/MyOrder');
