@@ -14,7 +14,7 @@ app.config.from_object(__name__)
 # enable CORS
 CORS(app, resources={r'/*': {'origins': '*'}})
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/api/login', methods=['GET', 'POST'])
 def all_user():
     response_object = {'status': 'success'}
     if request.method == 'post':
@@ -40,7 +40,7 @@ def all_user():
 #                response_object['message'] = False
 #    return jsonify(response_object)
 
-@app.route('/neworder', methods=['POST'])
+@app.route('/api/neworder', methods=['POST'])
 def addWares():
     response_object = {'status': 'success'}
     if request.method == 'POST':
@@ -59,7 +59,7 @@ def addWares():
         })
     return jsonify(response_object)
 
-@app.route('/uploadimage', methods=['POST'])
+@app.route('/api/uploadimage', methods=['POST'])
 def uploadimage():
     response_object = {'status': 'success'}
     if request.method == 'POST':
@@ -72,19 +72,19 @@ def uploadimage():
         response_object['filename'] = 'filename'
     return jsonify(response_object)
 
-@app.route('/allorder', methods=['GET'])
+@app.route('/api/allorder', methods=['GET'])
 def allorder():
     response_object = {'status': 'success'}
     response_object['wares'] = WARES
     return jsonify(response_object)
 
-@app.route('/myorder', methods=['GET'])
+@app.route('/api/myorder', methods=['GET'])
 def myorder():
     response_object = {'status': 'success'}
     response_object['wares'] = MYWARES
     return jsonify(response_object)
 
-@app.route('/orderdetails/<ware_id>', methods=['GET', 'POST'])
+@app.route('/api/orderdetails/<ware_id>', methods=['GET', 'POST'])
 def orderdetails(ware_id):
     response_object = {'status': 'success'}
     if request.method == 'POST':
@@ -98,7 +98,7 @@ def orderdetails(ware_id):
                 response_object['ware'] = ware
     return jsonify(response_object)
 
-@app.route('/myorderdetails/<ware_id>', methods=['GET'])
+@app.route('/api/myorderdetails/<ware_id>', methods=['GET'])
 def myorderdetails(ware_id):
     response_object = {'status': 'success'}
     for ware in MYWARES:
@@ -106,7 +106,7 @@ def myorderdetails(ware_id):
             response_object['ware'] = ware
     return jsonify(response_object)
 
-@app.route('/myorderdetails/<ware_id>', methods=['DELETE'])
+@app.route('/api/myorderdetails/<ware_id>', methods=['DELETE'])
 def myorderdelete(ware_id):
     response_object = {'status': 'success'}
     if request.method == 'DELETE':
@@ -120,7 +120,7 @@ def removeOrder(ware_id):
             return True
     return False
 
-@app.route('/acceptOrder/<ware_id>', methods=['GET','POST'])
+@app.route('/api/acceptOrder/<ware_id>', methods=['GET','POST'])
 def acceptOrder(ware_id):
     response_object = {'status': 'success'}
     if request.method == 'POST':

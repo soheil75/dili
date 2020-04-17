@@ -43,7 +43,7 @@ export default {
     },
     methods: {
         getware() {
-            const path = `http://localhost:5000/acceptOrder/${this.$route.params.id}`;
+            const path = `http://localhost:5000/api/acceptOrder/${this.$route.params.id}`;
             axios.get(path)
                 .then((res) => {
                     this.ware = res.data.ware;

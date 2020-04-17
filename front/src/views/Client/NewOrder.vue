@@ -109,7 +109,7 @@ export default {
             this.previewimage = URL.createObjectURL(file);
             let formData = new FormData()
             formData.append('image', file);
-            const path = 'http://localhost:5000/uploadimage';
+            const path = 'http://localhost:5000/api/uploadimage';
             axios.post(path, formData,{headers: {'Content-Type': 'multipart/form-data'}})
                 .then(resp => {
                     this.wares.imagePath = resp.data.filename
