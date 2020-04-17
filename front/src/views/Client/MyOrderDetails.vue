@@ -120,7 +120,6 @@ export default {
                 id: this.ware.id,
             };
             this.delete(payload);
-            this.initForm();
         },
         hideModal() {
             this.$refs['DeleteModal'].hide()
