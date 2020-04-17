@@ -147,7 +147,7 @@ const MySuggestionsDetailsPass = resolve => {
 const router = new VueRouter({
   routes,
   mode: 'history',
-  base: process.env.BASE_URL,
+  baseUrl: process.env.NODE_ENV === 'production'
 })
 
 export default router
