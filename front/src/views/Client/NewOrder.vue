@@ -5,26 +5,50 @@
             <Header :title="title" :link="backlink"></Header>
             <div class="new-order">
                 <form @submit="onSubmit">
-                    <div class="form-group mb-4 col-12">
+                    <div class="form-group mb-4 col-12" :class="{shakeError:$v.wares.Title.$error}">
                         <label>نام کالا</label>
-                        <input type="text" @blur="$v.Text.$touch()" v-model="wares.Title" class="form-control" placeholder="نام کالا" required>
+                        <input type="text" 
+                            v-model="wares.Title" 
+                            @blur="$v.wares.Title.$touch()"
+                            class="form-control" 
+                            placeholder="نام کالا"
+                            :class="{'is-invalid':$v.wares.Title.$error,
+                                'is-valid':!$v.wares.Title.$invalid}"
+                        >
+                        <div class="hidden" :class="{'invalidFeedback':$v.wares.Title.$error}">لطفا این فیلد را پر کنید</div>
                     </div>
-                    <div class="form-group mb-4 col-12">
+                    <div class="form-group mb-4 col-12" :class="{shakeError:$v.wares.Origin.$error}">
                         <label>مبدا</label>
-                        <input type="text" v-model="wares.Origin" class="form-control" placeholder="مبدا" required>
+                        <input type="text" 
+                            v-model="wares.Origin" 
+                            @blur="$v.wares.Origin.$touch()" 
+                            :class="{'is-invalid':$v.wares.Origin.$error,
+                                'is-valid':!$v.wares.Origin.$invalid}"
+                                 class="form-control" placeholder="مبدا">
+                            <div class="hidden" :class="{'invalidFeedback':$v.wares.Origin.$error}">لطفا این فیلد را پر کنید</div>
                     </div>
-                    <div class="form-group mb-4 col-12">
+                    <div class="form-group mb-4 col-12" :class="{shakeError:$v.wares.Destination.$error}">
                         <label>مقصد</label>
-                        <input type="text" v-model="wares.Destination" class="form-control" placeholder="مقصد" required>
+                        <input type="text" @blur="$v.wares.Destination.$touch()" v-model="wares.Destination"
+                         :class="{'is-invalid':$v.wares.Destination.$error,
+                                'is-valid':!$v.wares.Destination.$invalid}"
+                         class="form-control" placeholder="مقصد">
+                        <div class="hidden" :class="{'invalidFeedback':$v.wares.Destination.$error}">لطفا این فیلد را پر کنید</div>
                     </div>
                     <div class="col-12">
                         <label>لینک کالا</label>
                     </div>
-                    <div class="input-group mb-4 col-12">
-                        <input type="url" class="form-control" v-model="wares.Url" placeholder="لینک کالا" required>
+                    <div class="input-group mb-4 col-12" :class="{shakeError:$v.wares.Url.$error}">
+                        <input type="url" class="form-control"
+                        v-model="wares.Url"  
+                        @blur="$v.wares.Url.$touch()"
+                        :class="{'is-invalid':$v.wares.Url.$error,
+                                'is-valid':!$v.wares.Url.$invalid}"
+                        placeholder="لینک کالا">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class='fas fa-link'></i></span>
                         </div>
+                        <div class="hidden" :class="{'invalidFeedback':$v.wares.Url.$error}">لطفا این فیلد را پر کنید</div>
                     </div>
                     <div class="form-group mb-4 col-12">
                         <label>تصویر کالا</label>
@@ -41,32 +65,37 @@
                         <b-form-spinbutton style="width: 40%;" class="text-center" id="sb-inline" v-model="wares.Value" min="1" step="1" max="1000" inline>
                         </b-form-spinbutton>
                     </div>
-                    <div class="form-group mb-4 col-12">
+                    <div class="form-group mb-4 col-12" :class="{shakeError:$v.wares.Description.$error}">
                         <label>توضیحات کالا</label>
-                        <textarea class="form-control" v-model="wares.Description" placeholder="توضیحات" required></textarea>
+                        <textarea class="form-control" 
+                            v-model="wares.Description" 
+                            @blur="$v.wares.Description.$touch()"
+                            :class="{'is-invalid':$v.wares.Description.$error,
+                                    'is-valid':!$v.wares.Description.$invalid}"
+                            placeholder="توضیحات">
+                        </textarea>
+                        <div class="hidden" :class="{'invalidFeedback':$v.wares.Description.$error}">لطفا این فیلد را پر کنید</div>
                     </div>
                     <div class="col-12">
                         <label>تاریخ دریافت کالا</label>
                     </div>
-                    <div class="input-group mb-4 col-12">
+                    <div class="input-group mb-4 col-12" :class="{shakeError:$v.wares.Date.$error}">
                         <date-picker 
                             v-model="wares.Date" 
-                            format="YYYY-MM-DD" 
-                            display-format="dddd jDD jMMMM jYYYY" 
-                            :auto-submit="true" 
-                            placeholder="تاریخ دریافت کالا انتخاب کنید" 
-                            input-class="form-control w-100" 
-                            color="#b8221f" 
-                            style="width:100%" 
-                            :min='min'
-                            required
+                            @blur="$v.wares.Date.$touch()" 
+                            :class="{'is-invalid':$v.wares.Date.$error,
+                                    'is-valid':!$v.wares.Date.$invalid}"
+                             format="YYYY-MM-DD" display-format="dddd jDD jMMMM jYYYY" 
+                             :auto-submit="true" placeholder="تاریخ دریافت کالا انتخاب کنید" 
+                             input-class="form-control w-100" color="#b8221f" style="width:100%" :min='min'
                         />
+                        <div class="hidden" :class="{'invalidFeedback':$v.wares.Date.$error}">لطفا این فیلد را پر کنید</div>
                     </div>
                     <div class="form-group mb-4 col-12">
                         <b-form-checkbox class="d-inline" size="lg" v-model="wares.Accept" value="notAccepted" unchecked-value="accepted"></b-form-checkbox>
                         <label class="pr-2">بعد از این تاریخ کالا را نمی پذیرم</label>
                     </div>
-                    <button type="submit" class="btn submit-btn">ثبت سفارش</button>
+                    <button type="submit" :disabled="$v.$invalid" class="btn submit-btn">ثبت سفارش</button>
                 </form>
             </div>
         </div>
@@ -81,9 +110,6 @@ import axios from 'axios'
 import {required} from 'vuelidate/lib/validators'
 
 export default {
-    validations:{
-        Text:{required}
-    },
     data() {
         return {
             previewimage: '',
@@ -100,7 +126,7 @@ export default {
                 Date: '',
                 Accept: 'accepted'
             },
-            min:0,
+            min: 0,
         }
     },
     methods: {
@@ -110,7 +136,11 @@ export default {
             let formData = new FormData()
             formData.append('image', file);
             const path = '/api/uploadimage';
-            axios.post(path, formData,{headers: {'Content-Type': 'multipart/form-data'}})
+            axios.post(path, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
                 .then(resp => {
                     this.wares.imagePath = resp.data.filename
                     console.log(resp.data.filename)
@@ -158,18 +188,40 @@ export default {
             this.wares.Date = '';
             this.wares.Accept = [];
         },
-        getMinData(){
-            var todayDate = new Date().toISOString().slice(0,10);
+        getMinData() {
+            var todayDate = new Date().toISOString().slice(0, 10);
             this.min = todayDate
         },
     },
     created() {
-            this.getMinData();
-        },
+        this.getMinData();
+    },
     components: {
         Header,
         datePicker,
     },
+    validations: {
+        wares: {
+            Title: {
+                required
+            },
+            Origin: {
+                required
+            },
+            Destination: {
+                required
+            },
+            Url: {
+                required
+            },
+            Description: {
+                required
+            },
+            Date: {
+                required
+            },
+        }
+    }
 }
 </script>
 

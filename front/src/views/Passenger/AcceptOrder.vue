@@ -24,20 +24,42 @@
                             <div class="col-12">
                                 <h4 class="title">تاریخ تحویل کالا</h4>
                             </div>
-                            <div class="input-group mb-4 col-12">
-                                <date-picker @input="$v.Date.$touch()" v-model="comments.date" format="YYYY-MM-DD" display-format="dddd jDD jMMMM jYYYY" :auto-submit="true" placeholder="تاریخ تحویل کالا انتخاب کنید" input-class="form-control w-100" color="#b8221f" style="width:100%" :min='min' required/>
+                            <div class="input-group mb-4 col-12" :class="{shakeError:$v.comments.date.$error}">
+                                <date-picker v-model="comments.date" 
+                                    format="YYYY-MM-DD" display-format="dddd jDD jMMMM jYYYY" 
+                                    :auto-submit="true" placeholder="تاریخ تحویل کالا انتخاب کنید" 
+                                    input-class="form-control w-100" color="#b8221f" 
+                                    style="width:100%" :min='min'
+                                    @blur="$v.comments.date.$touch()" 
+                                    :class="{'is-invalid':$v.comments.date.$error,
+                                    'is-valid':!$v.comments.date.$invalid}"
+                                />
+                                <div class="hidden" :class="{'invalidFeedback':$v.comments.date.$error}">لطفا این فیلد را پر کنید</div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12" >
                                 <h4 class="title">مبلغ پیشنهادی</h4>
                             </div>
-                            <div class="input-group mb-4 col-12">
-                                <input type="number" @blur="$v.Cost.$touch()" v-model="comments.cost" class="form-control" placeholder="مبلغ پیشنهادی" required>
+                            <div class="input-group mb-4 col-12" :class="{shakeError:$v.comments.cost.$error}">
+                                <input type="number" v-model="comments.cost" 
+                                    class="form-control" placeholder="مبلغ پیشنهادی"
+                                    @blur="$v.comments.cost.$touch()" 
+                                    :class="{'is-invalid':$v.comments.cost.$error,
+                                    'is-valid':!$v.comments.cost.$invalid}"
+                                >
+                                <div class="hidden" :class="{'invalidFeedback':$v.comments.cost.$error}">لطفا این فیلد را پر کنید</div>
                             </div>
-                            <div class="form-group mb-4 col-12">
+                            <div class="form-group mb-4 col-12" :class="{shakeError:$v.comments.text.$error}">
                                 <h4 class="title">توضیحات شما</h4>
-                                <textarea @blur="$v.Text.$touch()" v-model="comments.text" class="form-control" placeholder="توضیحات" required></textarea>
+                                <textarea v-model="comments.text"
+                                    @blur="$v.comments.text.$touch()" 
+                                    class="form-control" placeholder="توضیحات"
+                                    :class="{'is-invalid':$v.comments.text.$error,
+                                    'is-valid':!$v.comments.text.$invalid}"
+                                    >
+                                </textarea>
+                                <div class="hidden" :class="{'invalidFeedback':$v.comments.text.$error}">لطفا این فیلد را پر کنید</div>
                             </div>
-                            <button type="submit" class="btn submit-btn">ثبت پیشنهاد</button>
+                            <button type="submit" :disabled="$v.$invalid" class="btn submit-btn">ثبت پیشنهاد</button>
                         </form>
                     </div>
                 </div>
@@ -54,6 +76,19 @@ import axios from 'axios'
 import { required } from 'vuelidate/lib/validators'
 
 export default {
+    validations: {
+        comments: {
+            date: {
+                required,
+            },
+            cost: {
+                required,
+            },
+            text: {
+                required,
+            },
+        },
+    },
     components: {
         Header,
         datePicker,
@@ -116,16 +151,5 @@ export default {
         this.getware();
         this.getMinData();
     },
-    validations: {
-        Date: {
-            required,
-        },
-        Cost: {
-            required,
-        },
-        Text: {
-            required,
-        }
-    }
 }
 </script>

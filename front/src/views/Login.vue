@@ -7,24 +7,39 @@
                 <div class="col-12">
                     <label>نام کاربری</label>
                 </div>
-                <div class="input-group edit mb-4 col-12">
+                <div class="input-group edit mb-3 col-12" :class="{shakeError:$v.LoginForm.Username.$error}">
                     <div class="input-group-prepend">
                         <span class="input-group-text edit"><i class='fas fa-user'></i></span>
                     </div>
-                    <input type="text" class="form-control input-edit" v-model="LoginForm.Username" placeholder="نام کاربری" required>
-                    
+                    <input type="text" 
+                        class="form-control input-edit" 
+                        @blur="$v.LoginForm.Username.$touch()" 
+                        v-model="LoginForm.Username" 
+                        placeholder="نام کاربری"
+                        :class="{'is-invalid':$v.LoginForm.Username.$error,
+                                'is-valid':!$v.LoginForm.Username.$invalid}"
+                        >
+                    <div class="hidden" :class="{'invalidFeedback':$v.LoginForm.Username.$error}">لطفا این فیلد را پر کنید</div>
+                    <div class="hidden" :class="{'invalidFeedback':!$v.LoginForm.Username.minlin}">تعداد کاراکترها از 6 عدد نمی تواند کمتر باشد</div>
                 </div>
                 <div class="col-12">
                     <label>رمزعبور</label>
                 </div>
-                <div class="input-group mb-5 col-12">
+                <div class="input-group mb-5 col-12" :class="{shakeError:$v.LoginForm.Password.$error}">
                     <div class="input-group-prepend">
                         <span class="input-group-text edit"><i class='fas fa-lock'></i></span>
                     </div>
-                    <input type="password" class="form-control input-edit" v-model="LoginForm.Password" placeholder="رمزعبور" required>
-                    
+                    <input type="password" 
+                    @blur="$v.LoginForm.Password.$touch()" 
+                    :class="{'is-invalid':$v.LoginForm.Password.$error,
+                                'is-valid':!$v.LoginForm.Password.$invalid}" 
+                    class="form-control input-edit" 
+                    v-model="LoginForm.Password" 
+                    placeholder="رمزعبور">
+                    <div class="hidden" :class="{'invalidFeedback':$v.LoginForm.Password.$error}">لطفا این فیلد را پر کنید</div>
+                    <div class="hidden" :class="{'invalidFeedback':!$v.LoginForm.Password.minlin}">تعداد کاراکترها از 6 عدد نمی تواند کمتر باشد</div>
                 </div>
-                <button type="submit" class="btn" id="submit-btn">ورود</button>
+                <button type="submit" :disabled="$v.$invalid" class="btn" id="submit-btn">ورود</button>
             </form>
             <router-link id="forget-pass" to="#">رمز عبور خود را فراموش کردید؟</router-link>
         </div>
@@ -34,7 +49,11 @@
 
 <script>
 import axios from 'axios';
-import {required,minLength} from 'vuelidate/lib/validators'
+import {
+    required,
+    minLength
+} from 'vuelidate/lib/validators'
+
 export default {
     data: () => ({
         LoginForm: {
@@ -44,16 +63,15 @@ export default {
     }),
     methods: {
         Login(payload) {
+            //const path = 'http://localhost:5000/api/login';
             const path = '/api/login';
             axios.post(path, payload)
-                .then(() => {
-                    //console.log(res.data.message)
-                    this.$router.push('/AllOrder');
-                    //if(res.data.message){
-                    //    this.$router.push('/AllOrder');
-                    //}else{
-                    //    this.$router.push('/Login');
-                    //}
+                .then((res) => {
+                    if(res.data.user){
+                        this.$router.push('/AllOrder');
+                    }else{
+                        console.log('error1')
+                    }
                 })
                 .catch((error) => {
                     console.log(error);
@@ -73,14 +91,17 @@ export default {
             this.LoginForm.Password = '';
         },
     },
-    validations:{
-        Username:{
-            required
+    validations: {
+        LoginForm: {
+            Username: {
+                required,
+                minlin: minLength(6)
+            },
+            Password: {
+                required,
+                minlin: minLength(6)
+            },
         },
-        Password:{
-            required,
-            minlin:minLength(6)
-        }
     }
 }
 </script>

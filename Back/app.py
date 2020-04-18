@@ -14,31 +14,30 @@ app.config.from_object(__name__)
 # enable CORS
 CORS(app, resources={r'/*': {'origins': '*'}})
 
-@app.route('/api/login', methods=['GET', 'POST'])
-def all_user():
-    response_object = {'status': 'success'}
-    if request.method == 'post':
-        post_data = request.get_json()
-        USER.append({
-            'id': uuid.uuid4().hex,
-            'Username': post_data.get('Username'),
-            'Password': post_data.get('Password'),
-        })
-    else:
-        return jsonify('Error!!!')
-    return jsonify(response_object)
-
-#@app.route('/login', methods=['POST'])
+#@app.route('/api/login', methods=['GET', 'POST'])
 #def all_user():
 #    response_object = {'status': 'success'}
 #    if request.method == 'post':
 #        post_data = request.get_json()
-#        for user in USERS:
-#            if user['Username'] == post_data.get('Username'):
-#                response_object['message'] = True
-#            else:
-#                response_object['message'] = False
+#        USER.append({
+#            'id': uuid.uuid4().hex,
+#            'Username': post_data.get('Username'),
+#            'Password': post_data.get('Password'),
+#            
+#        })
+#    else:
+#        return jsonify('Error!!!')
 #    return jsonify(response_object)
+
+@app.route('/api/login', methods=['GET','POST'])
+def login():
+    response_object = {'status': 'success'}
+    if request.method == 'POST':
+        post_data = request.get_json()
+        for user in USERS:
+            if user['Username'] == post_data.get('Username'):
+                response_object['user'] = True
+    return jsonify(response_object)
 
 @app.route('/api/neworder', methods=['POST'])
 def addWares():
@@ -528,21 +527,22 @@ MYWARES = [
         ]
     },
 ]
-USER = [
+USERS = [
     {
         'id': uuid.uuid4().hex,
-        'Username': 'Jack',
-        'Password': 'Password1',
+        'Username': 'Jack11',
+        'Password': '123456',
+        'Name':'علی بهرامی',
+        'Gender':'Male',
+        'User':'client'
     },
     {
         'id': uuid.uuid4().hex,
         'Username': 'Rowling',
         'Password': 'Password2',
-    },
-    {
-        'id': uuid.uuid4().hex,
-        'Username': 'Seuss',
-        'Password': 'Password3',
+        'Name':'سارا بهرامی',
+        'Gender':'Female',
+        'User':'Passenger'
     }
 ]
 

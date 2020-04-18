@@ -5,7 +5,6 @@ import Login from '../views/Login.vue';
 
 Vue.use(VueRouter)
 
-
 const MyAccount = resolve => {
   require.ensure(['../views/MyAccount.vue'], () =>{
     resolve(require('../views/MyAccount.vue'));
@@ -36,10 +35,6 @@ const MyOrderDetails = resolve => {
     resolve(require('../views/Client/MyOrderDetails.vue'));
   });
 };
-
-
-
-
 const AllOrderPass = resolve => {
   require.ensure(['../views/Passenger/AllOrder.vue'], () =>{
     resolve(require('../views/Passenger/AllOrder.vue'));
